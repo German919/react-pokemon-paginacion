@@ -12,22 +12,34 @@ const HomePages = () => {
     const filterPokemons = () => {
 
         if(search.length === 0) {
-            return pokemons.slice(paginacion,paginacion + 5 );
+            return pokemons.slice(paginacion, parseInt(paginacion + 5 ));
         }
 
         const filterPokemons = pokemons.filter(poke => poke.name.includes(search));
 
-        return filterPokemons.slice(paginacion,paginacion + 5 );
+        return filterPokemons.slice(parseInt(paginacion + 5 ));
     }
 
     const handleNext = () => {
         if(pokemons.filter(poke => poke.name.includes(search)).length > paginacion + 5){
-            setPaginacion((oldPaginacion)=> oldPaginacion + 5);
+            setPaginacion((oldPaginacion)=> parseInt(oldPaginacion + 5));
         }
     }
 
     const handlePrevius = () => {
-        if(paginacion > 0) setPaginacion((oldPaginacion)=> oldPaginacion - 5);
+        if(paginacion > 0) setPaginacion((oldPaginacion)=> parseInt(oldPaginacion - 5));
+    }
+
+    const inicioPage = () => {
+        if(paginacion > 0) setPaginacion(0);
+    }
+
+    const finPage = () => {
+        
+        let indiceFinal = pokemons.length;
+        let inicio = parseInt(indiceFinal - 5);
+        setPaginacion(inicio)
+
     }
 
     const handleSearch = (e) => {
@@ -46,6 +58,7 @@ const HomePages = () => {
                 onChange={handleSearch}
                 value={search}
                 />
+            <button onClick={inicioPage} className="btn btn-danger">Inicio</button>    
             <button 
                 onClick={handlePrevius} 
                 className="btn btn-primary">Anterior</button>
@@ -54,6 +67,8 @@ const HomePages = () => {
             <button 
                 onClick={handleNext} 
                 className="btn btn-primary">Proximo</button>
+            <button onClick={finPage} className="btn btn-danger">Fin</button>
+
             <table className="table">
                 <thead>
                     <tr>

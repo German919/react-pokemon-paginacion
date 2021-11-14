@@ -9,13 +9,14 @@ export const fetchAllPokemons = async() => {
 
 const transformPokemons = (pokes) => {
 
-    const newPokemons = []
-    
+    const newPokemons = [];
+    let prevId = 0;
     pokes.map((p) => {
-
-        let id = p.url.split("/")[6];
-        let pic = `https://raw.githubusercontent.com/PokeApI/sprites/master/sprites/pokemon/${id}.png` 
-        newPokemons.push({id, name:p.name, pic})
+        let id = ++prevId;
+        let idImg = p.url.split("/")[6];
+        let name = p.name
+        let pic = `https://raw.githubusercontent.com/PokeApI/sprites/master/sprites/pokemon/${idImg}.png` 
+        newPokemons.push({id, name, pic})
         return newPokemons
      
     })
